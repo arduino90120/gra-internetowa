@@ -1,0 +1,560 @@
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistrz Wiedzy</title>
+    <style>
+        body {
+            background-color: #da2a2a;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+            background-image: url('https://www.example.com/brain.png');
+            /* Dodaj obraz mózgu */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .category {
+            margin: 20px 0;
+        }
+        
+        .question {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        
+        .answer {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .answer.correct {
+            background-color: #4CAF50;
+        }
+        
+        .answer.incorrect {
+            background-color: #F44336;
+        }
+        
+        .answer:hover {
+            background-color: #ddd;
+        }
+        
+        #quiz-container {
+            display: none;
+        }
+        
+        nav button,
+        .return-button,
+        .category-btn,
+        #next-question {
+            background-color: #666;
+            color: #fff;
+            padding: 8px 20px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .support-us {
+    margin: 20px 0;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#paypal-button {
+    background-color: #0070ba;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+#paypal-button:hover {
+    background-color: #005ea6;
+}
+        
+        #next-question:hover {
+            background-color: #ba8787;
+        }
+        
+        .ads {
+            margin: 20px 0;
+            background-color: #6f7575;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        #result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        nav button {
+            background-color: #666;
+            color: #fff;
+            padding: 8px 20px;
+            margin: 0 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        nav button:hover {
+            background-color: #ba8787;
+        }
+        
+        .ads {
+            margin: 20px 0;
+            background-color: #6f7575;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        #result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        #options {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+        }
+        
+        .ads h2 {
+            margin: 0;
+        }
+        
+        .scoreboard {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Mistrz Wiedzy</h1>
+        <div id="category-container" class="category">
+            <h2>Wybierz kategorię:</h2>
+            <button class="category-btn" data-category="matematyka">Matematyka</button>
+            <button class="category-btn" data-category="fizyka">Fizyka</button>
+            <button class="category-btn" data-category="geografia">Geografia</button>
+            <button class="category-btn" data-category="historia">Historia</button>
+            <button class="category-btn" data-category="algebra">Algebra</button>
+            <button class="category-btn" data-category="jezyk_polski">Język Polski</button>
+            <button class="category-btn" data-category="sztuka">Sztuka</button>
+            <button class="category-btn" data-category="botanika">Botanika</button>
+        </div>
+
+        <nav>
+            <button id="about-btn">O nas</button>
+            <button id="contact-btn">Kontakt</button>
+
+        </nav>
+
+        <div id="about-container" class="content-section">
+            <h2>O nas</h2>
+            <p>Czy uważasz, że wiesz wszystko na temat nauki i Wiedzy , Sprawdź to w naszej interaktywnej, internetowej grze quizowej "Mistrz Wiedzy: To doskonała okazja, aby przetestować swoją wiedzę, odkryć nowe fakty .</p>
+            <button id="return-to-game">Powrót do gry</button>
+            <!-- New Return to Game button -->
+        </div>
+        <div id="contact-container" class="content-section">
+            <h2>Kontakt</h2>
+            <p>Możesz skontaktować się z nami pod adresem email: dronista3@gmail.com</p>
+
+        </div>
+        <div id="quiz-container" class="content-section">
+            <div class="question" id="question">Pytanie</div>
+            <div class="answers" id="answers"></div>
+            <button id="next-question">Następne pytanie</button>
+        </div>
+        <div class="ads">
+            <div id="ads-section">
+                <!-- Reklamy -->
+            </div>
+        </div>
+        <div class="scoreboard">
+            <h2>Wyniki:</h2>
+            <p id="score-matematyka">Matematyka: 0</p>
+            <p id="score-fizyka">Fizyka: 0</p>
+            <p id="score-geografia">Geografia: 0</p>
+            <p id="score-historia">Historia: 0</p>
+            <p id="score-algebra">Algebra: 0</p>
+            <p id="score-jezyk_polski">Język Polski: 0</p>
+            <p id="score-sztuka">Sztuka: 0</p>
+            <p id="score-botanika">Botanika: 0</p>
+        </div>
+    </div>
+
+    <div id="support-us" class="support-us">
+        <h2>Wesprzyj nas</h2>
+        <p>Jeśli podoba Ci się nasza gra, rozważ wsparcie nas poprzez PayPal:</p>
+        <button id="paypal-button">Wesprzyj nas</button>
+    </div>
+
+    <script>
+        const questions = {
+            matematyka: [{
+                    question: "Ile to jest 12*12?",
+                    answers: ["144", "154", "134"],
+                    correct: 0
+                }, {
+                    question: "Jaki jest pierwiastek kwadratowy z 256?",
+                    answers: ["14", "16", "18"],
+                    correct: 1
+
+                },
+
+                {
+                    question: "Ile krawędzi ma ośmiościan?",
+                    answers: ["30", "12", "23"],
+                    correct: 1
+
+                },
+
+                // Dodaj więcej pytań tutaj
+            ],
+            fizyka: [{
+                question: "Jakie jest prawo Ohma?",
+                answers: ["V = IR", "P = IV", "F = ma"],
+                correct: 0
+            }, {
+
+
+                question: "Czym jest dualizm korpuskularno-falowy?",
+                answers: ["Właściwość cząsteczek", "Zjawisko optyczne", "Stan kwantowy"],
+                correct: 0
+            }, {
+                question: "Co to jest siła?",
+                answers: ["Masa", "Prędkość", "Oddziaływanie"],
+                correct: 2
+            }],
+            geografia: [{
+                    question: "Jaka jest najwyższa konstrukcja stworzona przez człowieka, jaką kiedykolwiek zbudowano?",
+                    answers: ["Statuła wolonści w nowym jorku", "syrenka w warszawie", "Burdż Chalifa w Dubaju"],
+                    correct: 2
+                }, {
+                    question: "Jak nazywa się najdłuższa rzeka na świecie?",
+                    answers: ["Amazonka", "Nil", "Jangcy"],
+                    correct: 1
+                },
+
+
+
+                {
+                    question: "Jak nazywa się druga co do wysokości góra świata?",
+                    answers: ["Góry Stołowe", "K2", "Mount Everest"],
+                    correct: 1
+                },
+
+                // Dodaj więcej pytań tutaj
+            ],
+            historia: [{
+                    question: "W jakim kraju mieszkał Albert Einstein przed przeprowadzką do Stanów Zjednoczonych?",
+                    answers: ["czechy", "Niemcy", "Polska"],
+                    correct: 1
+                }, {
+                    question: "W którym roku wybuchła I wojna światowa?",
+                    answers: ["1912", "1914", "1916"],
+                    correct: 1
+                },
+
+                {
+                    question: "Kiedy hiszpański konkwistador Francisco Pizarro wylądował w Peru?",
+                    answers: ["2004", "1532", "1920"],
+                    correct: 1
+                },
+
+                // Dodaj więcej pytań tutaj
+            ],
+            algebra: [{
+                    question: "Rozwiąż równanie: 2x + 5 = 15",
+                    answers: ["x = 4", "x = 5", "x = 6"],
+                    correct: 0
+                }, {
+                    question: "Co to jest determinant macierzy?",
+                    answers: ["Wartość liczby", "Wielkość wektora", "Funkcja macierzy"],
+                    correct: 2
+                },
+
+                {
+                    question: "Co to jest funkcja liniowa?",
+                    answers: ["Funkcja wykładnicza", "Funkcja pierwszego stopnia", "Funkcja kwadratowa"],
+                    correct: 1
+                },
+                // Dodaj więcej pytań tutaj
+
+
+
+            ],
+
+            sztuka: [{
+                question: "Kto namalował 'Mona Lisę'?",
+                answers: ["Vincent van Gogh", "Leonardo da Vinci", "Pablo Picasso"],
+                correct: 1
+            }, {
+                question: "Jakie jest najstarsze znane dzieło sztuki?",
+                answers: ["Lascaux Cave Paintings", "Venus z Willendorfu", "Stonehenge"],
+                correct: 0
+            }, {
+                question: "Kto jest autorem rzeźby 'Dawid'?",
+                answers: ["Donatello", "Leonardo da Vinci", "Michał Anioł"],
+                correct: 2
+            }],
+
+
+
+            botanika: [{
+                    question: "Jak nazywa się nauka o roślinach?",
+                    answers: ["Zoologia", "Botanika", "Mikologia"],
+                    correct: 1
+                }, {
+
+
+                    question: "Która roślina jest największym kwiatem świata?",
+                    answers: ["Rafflesia arnoldii", "Titan arum", "Sunflower"],
+                    correct: 0
+
+
+
+                },
+
+                {
+                    question: "Co to jest fotosynteza?",
+                    answers: ["Proces oddychania roślin", "Proces wytwarzania pokarmu przez rośliny", "Proces kwitnienia roślin"],
+                    correct: 1
+                }
+
+                // Dodaj więcej pytań
+            ],
+
+
+            jezyk_polski: [
+
+
+                {
+                    question: "Kto napisał 'Pana Tadeusza'?",
+                    answers: ["Adam Mickiewicz", "Juliusz Słowacki", "Henryk Sienkiewicz"],
+                    correct: 0
+                }, {
+                    question: "Co to jest sonet?",
+                    answers: ["Rodzaj rymu", "Forma wiersza", "Gatunek literacki"],
+                    correct: 1
+                }, {
+                    question: "Kim był Stanisław Wyspiański?",
+                    answers: ["Poetą", "Dramaturgiem", "Malarzem"],
+                    correct: 2
+                },
+
+
+            ],
+
+        };
+
+
+
+        const scores = {
+            matematyka: 0,
+            fizyka: 0,
+            geografia: 0,
+            historia: 0,
+            algebra: 0,
+            jezyk_polski: 0,
+            sztuka: 0,
+            botanika: 0
+        };
+
+        const categoryContainer = document.getElementById('category-container');
+        const quizContainer = document.getElementById('quiz-container');
+        const aboutContainer = document.getElementById('about-container');
+        const contactContainer = document.getElementById('contact-container');
+        const questionElement = document.getElementById('question');
+        const answersElement = document.getElementById('answers');
+        const nextQuestionButton = document.getElementById('next-question');
+        const aboutButton = document.getElementById('about-btn');
+        const contactButton = document.getElementById('contact-btn');
+        const returnToGameButton = document.getElementById('return-to-game'); // New Return to Game button
+
+        const scoreboardElements = {
+            matematyka: document.getElementById('score-matematyka'),
+            fizyka: document.getElementById('score-fizyka'),
+            geografia: document.getElementById('score-geografia'),
+            historia: document.getElementById('score-historia'),
+            algebra: document.getElementById('score-algebra'),
+            jezyk_polski: document.getElementById('score-jezyk_polski'),
+            sztuka: document.getElementById('score-sztuka'),
+            botanika: document.getElementById('score-botanika')
+        };
+
+        let currentCategory = '';
+        let currentQuestionIndex = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const adsContainer = document.getElementById('ads-section');
+            adsContainer.innerHTML = '<p>Tu mogą być Twoje reklamy</p>';
+        });
+
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                currentCategory = button.getAttribute('data-category');
+                currentQuestionIndex = 0;
+                showQuestion();
+                categoryContainer.style.display = 'none';
+                quizContainer.style.display = 'block';
+            });
+        });
+
+        aboutButton.addEventListener('click', () => {
+            aboutContainer.style.display = 'block';
+            contactContainer.style.display = 'none';
+            categoryContainer.style.display = 'none';
+            quizContainer.style.display = 'none';
+        });
+
+        contactButton.addEventListener('click', () => {
+            contactContainer.style.display = 'block';
+            aboutContainer.style.display = 'none';
+            categoryContainer.style.display = 'none';
+            quizContainer.style.display = 'none';
+        });
+
+        returnToGameButton.addEventListener('click', () => { // Event listener for the Return to Game button
+            showHome();
+        });
+
+        nextQuestionButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions[currentCategory].length) {
+                showQuestion();
+            } else {
+                alert(`Quiz w kategorii ${currentCategory} zakończony!`);
+                quizContainer.style.display = 'none';
+                categoryContainer.style.display = 'block';
+            }
+        });
+
+        function showQuestion() {
+            const questionData = questions[currentCategory][currentQuestionIndex];
+            questionElement.textContent = questionData.question;
+            answersElement.innerHTML = '';
+            questionData.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.classList.add('answer');
+                button.addEventListener('click', () => checkAnswer(index, questionData.correct, button));
+                answersElement.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selected, correct, button) {
+            if (selected === correct) {
+                button.classList.add('correct');
+                scores[currentCategory]++;
+                updateScoreboard();
+            } else {
+                button.classList.add('incorrect');
+            }
+            disableAnswers();
+        }
+
+        function disableAnswers() {
+            document.querySelectorAll('.answer').forEach(button => {
+                button.disabled = true;
+            });
+        }
+
+        function updateScoreboard() {
+            scoreboardElements[currentCategory].textContent = `${capitalize(currentCategory)}: ${scores[currentCategory]}`;
+        }
+
+        function showHome() {
+            aboutContainer.style.display = 'none';
+            contactContainer.style.display = 'none';
+            quizContainer.style.display = 'none';
+            categoryContainer.style.display = 'block';
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+        function showResults() {
+        const percentage = (totalScore / totalQuestions) * 100;
+        let grade;
+        if (percentage >= 90) {
+            grade = 'A';
+        } else if (percentage >= 80) {
+            grade = 'B';
+        } else if (percentage >= 70) {
+            grade = 'C';
+        } else if (percentage >= 60) {
+            grade = 'D';
+        } else {
+            grade = 'F';
+        }
+        alert(`Twój wynik: ${totalScore}/${totalQuestions} (${percentage.toFixed(2)}%) - Ocena: ${grade}`);
+    }
+
+    // PayPal button functionality
+    document.getElementById('paypal-button').addEventListener('click', () => {
+        window.location.href = 'https://www.paypal.com/donate?hosted_button_id=YOUR_PAYPAL_BUTTON_ID';
+    });
+
+
+        document.getElementById('about-btn').addEventListener('click', () => {
+            document.getElementById('category-container').style.display = 'none';
+            document.getElementById('about-container').style.display = 'block';
+        });
+
+        document.getElementById('contact-btn').addEventListener('click', () => {
+            document.getElementById('category-container').style.display = 'none';
+            document.getElementById('contact-container').style.display = 'block';
+        });
+
+        // Added functions for return buttons
+        document.getElementById('back-to-game-about').addEventListener('click', () => {
+            document.getElementById('about-container').style.display = 'none';
+            document.getElementById('category-container').style.display = 'block';
+        });
+
+        document.getElementById('back-to-game-contact').addEventListener('click', () => {
+            document.getElementById('contact-container').style.display = 'none';
+            document.getElementById('category-container').style.display = 'block';
+        });
+    </script>
+</body>
+
+</html>
